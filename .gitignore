@@ -1,0 +1,41 @@
+# Docker & Podman
+*.log
+docker-compose.override.yml
+.env
+.env.local
+
+# AdGuard Home data
+adguard/**
+!adguard/work/
+!adguard/work/.gitkeep
+!adguard/conf/
+!adguard/conf/.gitkeep
+
+# Tailscale state
+tailscale/**
+!tailscale/.gitkeep
+!tailscale/state/
+!tailscale/state/.gitkeep
+*.state
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Nix
+result
+result-*
+.direnv/
+
+# Secrets & credentials
+*.key
+*.pem
+secrets/
+credentials/

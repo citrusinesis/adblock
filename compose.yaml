@@ -1,0 +1,51 @@
+
+services:
+  adguard:
+    image: adguard/adguardhome:latest
+    hostname: adguard
+    ports:
+      # DNS
+      - 53:53/tcp
+      - 53:53/udp
+      # DHCP
+      - 67:67/udp
+      - 68:68/tcp
+      - 68:68/udp
+      # HTTP/HTTPS
+      - 80:80/tcp
+      - 443:443/tcp
+      - 443:443/udp
+      - 3000:3000/tcp
+      # TLS
+      - 853:853/tcp
+      # QUIC
+      - 784:784/udp
+      - 853:853/udp 
+      - 8853:8853/udp
+      # DNSCrypt
+      - 5443:5443/tcp
+      - 5443:5443/udp
+    volumes:
+      - ${PWD}/adguard/work:/opt/adguardhome/work
+      - ${PWD}/adguard/conf:/opt/adguardhome/conf
+    environment:
+      - TZ=Asia/Seoul
+    depends_on:
+      - tailscale
+    network_mode: service:adguard
+    restart: unless-stopped
+  tailscale:
+    image: tailscale/tailscale:latest
+    hostname: adguard
+    environment:
+      - TS_AUTHKEY=${TS_AUTHKEY}
+      - TS_EXTRA_ARGS=--advertise-tags=tag:container
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+    volumes:
+      - ${PWD}/tailscale/state:/var/lib/tailscale
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+    restart: unless-stopped
