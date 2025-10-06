@@ -2,7 +2,6 @@
 services:
   adguard:
     image: adguard/adguardhome:latest
-    hostname: adguard-home
     ports:
       # DNS
       - 53:53/tcp
@@ -32,7 +31,7 @@ services:
       - TZ=Asia/Seoul
     depends_on:
       - tailscale
-    network_mode: service:adguard
+    network_mode: service:tailscale
     restart: unless-stopped
   tailscale:
     image: tailscale/tailscale:latest
