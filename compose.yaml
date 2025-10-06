@@ -2,7 +2,7 @@
 services:
   adguard:
     image: adguard/adguardhome:latest
-    hostname: adguard
+    hostname: adguard-home
     ports:
       # DNS
       - 53:53/tcp
